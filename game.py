@@ -25,51 +25,15 @@ class Portal(pygame.sprite.Sprite):
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, pos_x, pos_y):
-        super().__init__(player_group, all_sprites)
-        self.image = player_image
-        self.rect = self.image.get_rect().move(tile_width * pos_x, tile_height * pos_y)
-
-    def move_check(self):
-        if (not pygame.sprite.spritecollideany(player, tiles_group) or
-                pygame.sprite.spritecollideany(player, tiles_group)):
-            return False
+    ...
 
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, pos_x, pos_y, speed=0.1):
-        super().__init__(enemy_group, all_sprites)
-        self.image = tile_images['enemy']
-        self.rect = self.image.get_rect().move(tile_width * pos_x, tile_height * pos_y)
-        self.speed = speed
-
-    def move_towards_player(self, player_rect):
-        dx = player_rect.x - self.rect.x
-        dy = player_rect.y - self.rect.y
-        dist = max(abs(dx), abs(dy))
-
-        if dist != 0:
-            dx = dx / dist * self.speed
-            dy = dy / dist * self.speed
-
-        new_x = self.rect.x + dx
-        new_y = self.rect.y + dy
-        self.rect.x = new_x
-        self.rect.y = new_y
+    ...
 
 
 class Camera:
-    def __init__(self):
-        self.dx = 0
-        self.dy = 0
-
-    def apply(self, obj):
-        obj.rect.x += self.dx
-        obj.rect.y += self.dy
-
-    def update(self, target):
-        self.dx = -(target.rect.x + target.rect.w // 2 - WIDTH // 2)
-        self.dy = -(target.rect.y + target.rect.h // 2 - HEIGHT // 2)
+    ...
 
 
 def load_image(name, colorkey=None):
@@ -121,174 +85,31 @@ def move_check():
 
 
 def start_screen():
-    intro_text = ["ЗАСТАВКА", "",
-                  "Правила игры",
-                  "Если в правилах несколько строк,",
-                  "приходится выводить их построчно"]
-
-    fon = pygame.transform.scale(load_image('fon.jpg'), (WIDTH, HEIGHT))
-    screen.blit(fon, (0, 0))
-    font = pygame.font.Font(None, 30)
-    text_coord = 70
-    for line in intro_text:
-        string_rendered = font.render(line, 1, pygame.Color('black'))
-        intro_rect = string_rendered.get_rect()
-        text_coord += 10
-        intro_rect.top = text_coord
-        intro_rect.x = 70
-        text_coord += intro_rect.height
-        screen.blit(string_rendered, intro_rect)
-
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                terminate()
-            elif event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:
-                return
-        pygame.display.flip()
-        clock.tick(FPS)
+    ...
 
 
 def smooth_player_move_up():
-    for i in range(5):
-        player.image = pygame.transform.scale(load_image('2.png'), (50, 50))
-        player.rect.y -= STEP / 5
-
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                terminate()
-
-        screen.fill((0, 0, 255))
-        tiles_group.draw(screen)
-        walls_group.draw(screen)
-        portals_group.draw(screen)
-        player_group.draw(screen)
-        enemy_group.draw(screen)
-        camera.update(player)
-
-        for sprite in all_sprites:
-            camera.apply(sprite)
-
-        pygame.display.flip()
-        clock.tick(FPS)
+    ...
 
 
 def smooth_player_move_down():
-    for i in range(5):
-        player.image = pygame.transform.scale(load_image('1.png'), (50, 50))
-        player.rect.y += STEP / 5
-
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                terminate()
-
-        screen.fill((0, 0, 255))
-        tiles_group.draw(screen)
-        walls_group.draw(screen)
-        portals_group.draw(screen)
-        player_group.draw(screen)
-        enemy_group.draw(screen)
-        camera.update(player)
-
-        for sprite in all_sprites:
-            camera.apply(sprite)
-
-        pygame.display.flip()
-        clock.tick(FPS)
+    ...
 
 
 def smooth_player_move_left():
-    for i in range(5):
-        if i % 2 == 0:
-            player.image = pygame.transform.scale(load_image('left1.png'), (50, 50))
-        else:
-            player.image = pygame.transform.scale(load_image('left2.png'), (50, 50))
-        player.rect.x -= STEP / 5
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                terminate()
-
-        screen.fill((0, 0, 255))
-        tiles_group.draw(screen)
-        walls_group.draw(screen)
-        portals_group.draw(screen)
-        player_group.draw(screen)
-        enemy_group.draw(screen)
-        camera.update(player)
-
-        for sprite in all_sprites:
-            camera.apply(sprite)
-
-        pygame.display.flip()
-        clock.tick(FPS)
+    ...
 
 
 def smooth_player_move_right():
-    for i in range(5):
-        if i % 2 == 0:
-            player.image = pygame.transform.scale(load_image('r1.png'), (50, 50))
-        else:
-            player.image = pygame.transform.scale(load_image('r2.png'), (50, 50))
-        player.rect.x += STEP / 5
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                terminate()
-
-        screen.fill((0, 0, 255))
-        tiles_group.draw(screen)
-        walls_group.draw(screen)
-        portals_group.draw(screen)
-        player_group.draw(screen)
-        enemy_group.draw(screen)
-        camera.update(player)
-
-        for sprite in all_sprites:
-            camera.apply(sprite)
-
-        pygame.display.flip()
-        clock.tick(FPS)
+    ...
 
 
 def fade_out_and_load_new_world(screen, clock, new_map_filename):
-    fade_duration = 2000
-    fade_steps = 50
-    fade_step_duration = fade_duration // fade_steps
-
-    fade_surface = pygame.Surface((screen.get_width(), screen.get_height()))
-    fade_surface.fill((0, 0, 0))
-
-    for alpha in range(fade_steps + 1):
-        fade_surface.set_alpha(int(alpha / fade_steps * 255))
-        screen.blit(fade_surface, (0, 0))
-        pygame.display.flip()
-        pygame.time.delay(fade_step_duration)
-        clock.tick(60)
-
-    new_player, level_x, level_y = generate_level(load_level(new_map_filename))
-    camera.update(new_player)
-    all_sprites.empty()
-    tiles_group.empty()
-    walls_group.empty()
-    portals_group.empty()
-    player_group.empty()
-    enemy_group.empty()
-
-    all_sprites.add(new_player)
-    tiles_group.add(new_player, *tiles_group.sprites())
-    walls_group.add(*walls_group.sprites())
-    portals_group.add(*portals_group.sprites())
-    player_group.add(new_player)
-    enemy_group.add(*enemy_group.sprites())
-
-    pygame.time.delay(1000)
+    ...
 
 
 pygame.init()
-FPS = 80
+FPS = 24
 WIDTH, HEIGHT = 500, 500
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
