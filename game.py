@@ -294,7 +294,7 @@ clock = pygame.time.Clock()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 screen.fill((0, 0, 255))
 start_screen()
-STEP = 50
+STEP = 60
 
 tile_images = {
     'wall': load_image('box.png'),
