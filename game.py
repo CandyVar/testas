@@ -288,7 +288,7 @@ def fade_out_and_load_new_world(screen, clock, new_map_filename):
 
 
 pygame.init()
-FPS = 50
+FPS = 80
 WIDTH, HEIGHT = 500, 500
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
