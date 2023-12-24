@@ -105,37 +105,7 @@ def smooth_player_move_right():
 
 
 def fade_out_and_load_new_world(screen, clock, new_map_filename):
-    fade_duration = 2000
-    fade_steps = 50
-    fade_step_duration = fade_duration // fade_steps
-
-    fade_surface = pygame.Surface((screen.get_width(), screen.get_height()))
-    fade_surface.fill((0, 0, 0))
-
-    for alpha in range(fade_steps + 1):
-        fade_surface.set_alpha(int(alpha / fade_steps * 255))
-        screen.blit(fade_surface, (0, 0))
-        pygame.display.flip()
-        pygame.time.delay(fade_step_duration)
-        clock.tick(60)
-
-    new_player, level_x, level_y = generate_level(load_level(new_map_filename))
-    camera.update(new_player)
-    all_sprites.empty()
-    tiles_group.empty()
-    walls_group.empty()
-    portals_group.empty()
-    player_group.empty()
-    enemy_group.empty()
-
-    all_sprites.add(new_player)
-    tiles_group.add(new_player, *tiles_group.sprites())
-    walls_group.add(*walls_group.sprites())
-    portals_group.add(*portals_group.sprites())
-    player_group.add(new_player)
-    enemy_group.add(*enemy_group.sprites())
-
-    pygame.time.delay(1000)
+    ...
 
 
 pygame.init()
